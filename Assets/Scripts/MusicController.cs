@@ -13,20 +13,29 @@ namespace BarkyBoys.Game
 		[SerializeField] [Range(0f, 250f)]
 		private double BPM;	//We need to know the BPM of the song in order to calculate the beats
 
-		private double samplesPerBeat;	//The amount of audio samples to wait between triggering beats
-		private int lastSample;	//the sample at which we last triggered a beat
+		private double samplesPerBeat, lastSample;  //The amount of audio samples to wait between triggering beats anf the sample at which we last triggered a beat
 		void Start()
 		{
+			StartMusic();
+		}
+
+		private void StartMusic() 
+		{
 			music.Play();
-			samplesPerBeat = (double)AudioSettings.outputSampleRate / (BPM / 120d);	//The samples per beat is calculated as the samples per second over (BPM/120), or "beats per half second". This gives us every other beat
+			samplesPerBeat = (double)(music.clip.frequency) / (BPM / 120d); //The samples per beat is calculated as the samples per second over (BPM/120), or "beats per half second". This gives us every other beat
 		}
 
 		private void Update()
 		{
 			if (music.timeSamples > samplesPerBeat + lastSample)	//If we've reached or overshot the next beat, trigger the event
 			{
-				lastSample = music.timeSamples;	//We set the time of the last sample to the current sample
+				lastSample += samplesPerBeat;	//We set the time of the last sample to the current sample
 				Bounce?.Invoke();	//If anyone is listening for the event, we incoke it
+			}
+
+			if (!music.isPlaying)
+			{
+				music.Play();
 			}
 		}
 

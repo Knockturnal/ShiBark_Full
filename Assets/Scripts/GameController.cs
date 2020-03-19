@@ -58,6 +58,18 @@ namespace BarkyBoys.Game
 			counter.AddScore(BaseScoreNow());	//We add score based on the below calculation
 		}
 
+		public void Damage() 
+		{
+			if(counter.countGoal > 0)
+			{
+				counter.ResetScore();
+			}
+			else
+			{
+				GameOver();
+			}
+		}
+
 		public float BaseScoreNow()
 		{
 			return Mathf.Ceil(Time.time);	//We simply take the current time in the game and round up to get the score we add per kill

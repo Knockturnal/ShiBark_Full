@@ -6,7 +6,7 @@ namespace BarkyBoys.Game
 	public class ScoreCounter : MonoBehaviour	//This class controls the score counter
 	{
 		[HideInInspector]
-		public float countGoal;	//The actual score
+		public float countGoal, maxScore;	//The actual score
 
 		[SerializeField]
 		private TextMeshProUGUI scoreText;	//The text showing the score
@@ -18,11 +18,21 @@ namespace BarkyBoys.Game
 			countGoal += newScore;	//We add the newly gained score to our counting target
 		}
 
+		public void ResetScore() 
+		{
+			countGoal = 0;
+		}
+
 		private void Update()
 		{
+			if (maxScore < countGoal) 
+			{
+				maxScore = countGoal;
+			}
+
 			if (current != countGoal)	//Do the following if we are not done counting
 			{
-				current = Mathf.SmoothDamp(current, countGoal, ref countSpeed, 0.2f);	//Set the current counting value to a smooth-damped value between where we are currently counting and our counting target
+				current = Mathf.SmoothDamp(current, countGoal, ref countSpeed, 0.2f);   //Set the current counting value to a smooth-damped value between where we are currently counting and our counting target
 				scoreText.text = "x" + Mathf.RoundToInt(current).ToString();	//Update the score display text
 			}
 		}

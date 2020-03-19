@@ -6,7 +6,7 @@ namespace BarkyBoys.Game
 	{
 		[SerializeField]
 		private float baseSpeed, baseAmplitude, baseFrequency;	//The horizontal speed, size of vertical curves, and how often those curves come
-		private Rigidbody rb;	//The RigidBody attached to this object
+		private Rigidbody rb;   //The RigidBody attached to this object
 
 		private void OnEnable()
 		{

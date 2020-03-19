@@ -24,8 +24,11 @@ namespace BarkyBoys.Game
 			StartCoroutine(Cut());
 		}
 
-		private IEnumerator Cut()	//We use a coroutine so we can snap the shears shut at the beat, wait a bit, then reopen them
+		private IEnumerator Cut()   //We use a coroutine so we can snap the shears shut at the beat, wait a bit, then reopen them
 		{
+			if (t != null) { t.Complete(); }	//If we are not finished playing the previous tween we have to complete it to stay on sync
+			if (t2 != null) { t2.Complete(); }
+
 			t = bottomBlade.DOLocalRotate(new Vector3(0, rotateAmount, 0), 0.2f);	//Snap the bottom blade shut
 			t.SetEase(Ease.OutBounce);	//We set the ease type to overshoot and bounce
 			t2 = topBlade.DOLocalRotate(new Vector3(0, -rotateAmount, 0), 0.2f);	//Same as above but top blade

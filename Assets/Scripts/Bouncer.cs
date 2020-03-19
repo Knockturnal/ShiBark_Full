@@ -17,6 +17,7 @@ namespace BarkyBoys.Game
 
 		void DoBounce()
 		{
+			if(t != null) { t.Complete(); } //If we are not finished playing the previous tween we have to complete it to stay on sync
 			t = transform.GetChild(0).DOShakeScale(0.3f, bounceAmount);	//When the MusicController triggers a beat we shake the scale of the object to make it bounce
 		}
 		private void OnDisable()
